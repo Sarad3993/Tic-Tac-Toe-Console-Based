@@ -1,0 +1,14 @@
+********** READ THESE INSTRUCTIONS ***********
+
+Hey Guys ....
+If u are new to this amazing game have a look into these rules before playing it 
+It just takes a second...
+
+1. This game is played between two players on a 3x3 field 
+2. One of the players plays as 'X', and other player plays as 'O' 
+3. There are total 9 valid moves in the game 
+4. The first player that is able to write 3 'X' or 3 'O' in straight rows, columns or diagonals WINS the game 
+5. If all cells are occupied and neither player is able to win the game then its a DRAW or TIE 
+
+Ok ,  don't hate me for explaining these pretty simple rules :) 
+Just enjoy the game !!!
