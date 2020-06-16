@@ -4,7 +4,6 @@
 # i have used lots of comment so that everybody can understand the game logic
 # so let's start building tic tac toe from scratch
 
-
 # first let's define the rules of the game inside a function
 # for this i have created a function which can be invoked in required position
 
