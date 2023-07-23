@@ -27,7 +27,7 @@ def game_rules():
 # for this first we must create a list having 9 elements as blank spaces
 # later we can access each element of that list one by one
 
-cell = [" " for i in range(10)]
+cell = [" " for _ in range(10)]
 # creates a list ---> cell of 9 blank spaces
 
 #function for creating empty game board from above list
@@ -36,15 +36,15 @@ def game_board(cell):
     # here we start indexing from 1 and not 0 so that we don't get confuse while playing game
     # index [1] represents 1st row;1st column and so on
 
-    print(' ' + cell[1] + ' | ' + cell[2] + ' | ' + cell[3])
+    print(f' {cell[1]} | {cell[2]} | {cell[3]}')
 
     print('---+---+---')
 
-    print(' ' + cell[4] + ' | ' + cell[5] + ' | ' + cell[6])
+    print(f' {cell[4]} | {cell[5]} | {cell[6]}')
 
     print('---+---+---')
 
-    print(' ' + cell[7] + ' | ' + cell[8] + ' | ' + cell[9])
+    print(f' {cell[7]} | {cell[8]} | {cell[9]}')
 
 
 # We have completed 1st step of building this game
@@ -58,18 +58,16 @@ def game_board(cell):
 
 def winner(cell,char):
 
-    if ((cell[1] == cell[2] == cell[3] == char)     # 1st three for rows
-            or (cell[4] == cell[5] == cell[6] == char)
-            or (cell[7] == cell[8] == cell[9] == char)
-            or (cell[1] == cell[4] == cell[7] == char)  # next three for columns
-            or (cell[2] == cell[5] == cell[8] == char)
-            or (cell[3] == cell[6] == cell[9] == char)
-            or (cell[1] == cell[5] == cell[9] == char)  # last two for diagonals
-            or (cell[3] == cell[5] == cell[7] == char)):
-
-        return True
-    else:
-        return False
+    return (
+        cell[1] == cell[2] == cell[3] == char
+        or cell[4] == cell[5] == cell[6] == char
+        or cell[7] == cell[8] == cell[9] == char
+        or cell[1] == cell[4] == cell[7] == char
+        or cell[2] == cell[5] == cell[8] == char
+        or cell[3] == cell[6] == cell[9] == char
+        or cell[1] == cell[5] == cell[9] == char
+        or cell[3] == cell[5] == cell[7] == char
+    )
 
 
 # Now lets create a function to check for draw or tie :
@@ -77,14 +75,8 @@ def winner(cell,char):
 # counter increases simultaneously and when count reaches 9 we can say that it's a draw or tie
 # because if we want to win the game count never reaches 9 i.e least moves to win the game is 8
 def check_tie(cell):
-    count = 0
-    for i in range(10):
-        if (cell[i]  =='X' or cell[i] =='O'):
-            count +=1
-    if count == 9:
-        return True
-    else:
-        return False
+    count = sum(1 for i in range(10) if cell[i] in ['X', 'O'])
+    return count == 9
 
 
 # Now lets create a function that accepts player's name
@@ -105,7 +97,7 @@ def player_character():
     player1 = ''
     # keeps asking the player until the player types 'X' or 'O' correctly
     # if player types anything beside those letters ; it prompts until it gets 'X' or 'O'
-    while not (player1 == 'X' or player1 == 'O'):
+    while player1 not in {'X', 'O'}:
         print(f"{name1} , do you want to be play as 'X' or 'O' ? ")
         player1 = input().upper()
         # upper() functions converts char into uppercase if user enters in lowercase
@@ -115,10 +107,7 @@ def player_character():
     # or if player1 chooses 'O' then player2 should play with 'X'
 
     player2 = ''
-    if player1 =='X':
-        player2 = 'O'
-    else:
-        player2 = 'X'
+    player2 = 'O' if player1 =='X' else 'X'
     print(f"Hey, {name2} , {player1} is already chosen so you must play as: {player2} \n")
     return [player1,player2]
     # list is returned as : ['X','O'] if player1 chooses 'X' first..here index[0] = 'X' and index[1] = 'Y'
@@ -129,17 +118,12 @@ def player_character():
 # Now lets create a function that prompts user to enter the position in the board for playing game:
 
 def player_moves():
-    valid_moves = [] # create a empty list where we can store valid moves
-    for i in range(10):
-        valid_moves.append(str(i)) # str is used so that player's moves are stored as strings
-        # now valid moves '1' to '9' gets added in above empty list due to append()
-        # and it looks like: ['1','2','3','4','5','6','7','8','9'] as there are 9 valid moves in total
-
+    valid_moves = [str(i) for i in range(10)]
     # now we must establish a condition to check whether user entered valid moves or not
     # if player enters other number/character beside those inside the list then
     # player is prompted with a message to enter no again
     move = 0
-    while not (move in valid_moves):
+    while move not in valid_moves:
         print("Please! enter valid position between(1-9) ")
         move = input()
     return int(move)
@@ -216,17 +200,15 @@ if __name__ == '__main__':
         main_game()
 
         # Now lets create a condition if user wants to replay the game
-        cell = [' ' for x in range(10)]
+        cell = [' ' for _ in range(10)]
         # if this list is not defined here there will be a problem
         # ie. when game is replayed empty board won't appear on the console
 
         play_again = input("Do u want to play the game again (Y/N)? ").upper()
         if play_again == 'Y':
             continue
-            # if user enters 'Y' loop goes up into main_game() and game starts as usual
-        else:
-            print("\nThank you for playing the game...Hope u enjoyed it !!! ")
-            break
+        print("\nThank you for playing the game...Hope u enjoyed it !!! ")
+        break
             # if user enters anything other than 'Y' loop stops
             # and above message is displayed on console
 
